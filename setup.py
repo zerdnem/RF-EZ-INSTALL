@@ -76,10 +76,10 @@ def set_path_python():
 
 
 def install_python_modules():
-    subprocess.Popen('pip install flask')
-    subprocess.Popen('pip install flask-wtf')
-    subprocess.Popen('pip install pyodbc')
-    subprocess.Popen('pip install passlib')
+    subprocess.Popen('pip install flask', stdout=FNULL, stderr=FNULL)
+    subprocess.Popen('pip install flask-wtf', stdout=FNULL, stderr=FNULL)
+    subprocess.Popen('pip install pyodbc', stdout=FNULL, stderr=FNULL)
+    subprocess.Popen('pip install passlib', stdout=FNULL, stderr=FNULL)
 
 
 def create_db(db):
@@ -115,11 +115,11 @@ def odbcconf():
 def copy_dll():
     dllfile = 'C:\\AppServ\php5\\ntwdblib.dll'
     exefile = 'RF Online.exe'
-    if os.path.isfile(file):
+    if os.path.isfile(dllfile):
         shutil.copy2('C:\\AppServ\php5\\ntwdblib.dll', 'C:\\Windows')
         shutil.copy2('C:\\AppServ\\php5\\ntwdblib.dll', 'C:\\Windows\\system32')
         shutil.copy2('C:\\AppServ\\php5\\ntwdblib.dll', 'C:\\Windows\\SysWow64')
-        shutil.copy2(path, 'C:\\Program Files (x86)\\CCR INC\\RFOnline\\')
+        shutil.copy2(exefile, 'C:\\Program Files (x86)\\CCR INC\\RFOnline\\')
     else:
         print "File %s not found!" % file
 
@@ -249,17 +249,17 @@ if __name__ == '__main__':
         restore_rfuser()
         restore_rfworld()
         odbcconf()
+        raw_input('Press any key to continue...')
 
         #Configure Web CPANEL
         print "Configuring Web CPANEL..."
         set_path_python()
         install_python_modules()
-        restart_mssql()
-        restart_apache()
+        # restart_mssql()
+        # restart_apache()
         with indent(4, quote='>>>'):
             puts(colored.green('Success: ') + 'Installation Complete!')
-            os.system('cls')
-            time.sleep(5)
+            time.sleep(10)
 
     elif input == 2:
         start_server()
