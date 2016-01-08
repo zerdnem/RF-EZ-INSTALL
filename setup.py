@@ -27,6 +27,7 @@ class Whatever(threading.Thread):
         if os.path.isfile(self.filename):
             # print "Starting " + self.name
             extract_files(self.filename)
+            raw_input('Press any key to continue...')
         
 
 def extract_files(file):
@@ -42,7 +43,6 @@ def extract_files(file):
             args = "unrar x -y '{0}' '{1}\\'".format(file, cwd)
             lex = shlex.split(args)
             proc = subprocess.Popen(lex)
-            raw_input('Press any key to continue...')
         elif file == emulatorrar:
             args = "unrar x -y '{0}' 'C:\\AppServ\\'".format(file)
             lex = shlex.split(args)
@@ -236,7 +236,6 @@ if __name__ == '__main__':
         thread1.start()
         thread2.start()
         thread3.start()
-        raw_input('Press any key to continue...')
         copy_dll()
 
         #Configure MSSQL
