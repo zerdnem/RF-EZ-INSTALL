@@ -121,7 +121,7 @@ def copy_dll():
         shutil.copy2('C:\\AppServ\\php5\\ntwdblib.dll', 'C:\\Windows\\SysWow64')
         shutil.copy2(exefile, 'C:\\Program Files (x86)\\CCR INC\\RFOnline\\')
     else:
-        print "File %s not found!" % dllfile
+        print "File %s not found!" % file
 
 
 def restart_mssql():
@@ -176,6 +176,7 @@ def start_web():
         if os.path.isdir(checkpath):
             app = 'app.py'
             args = 'python2 {0}{1}'.format(checkpath, app)
+            subprocess.Popen(args)
             with indent(4, quote='>>>'):
                 puts(colored.green('Success: ') + 'Visit this link to register http://127.0.0.1:8666/gm')
         else:
