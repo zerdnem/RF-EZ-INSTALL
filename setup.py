@@ -237,6 +237,7 @@ if __name__ == '__main__':
         thread2.start()
         thread3.start()
         copy_dll()
+        raw_input('Press any key to continue...')
 
         #Configure MSSQL
         print "Configuring MSSQL..."
