@@ -121,7 +121,7 @@ def copy_dll():
         shutil.copy2('C:\\AppServ\\php5\\ntwdblib.dll', 'C:\\Windows\\SysWow64')
         shutil.copy2(exefile, 'C:\\Program Files (x86)\\CCR INC\\RFOnline\\')
     else:
-        print "File %s not found!" % file
+        print "File %s not found!" % dllfile
 
 
 def restart_mssql():
@@ -162,9 +162,10 @@ def start_server():
         print "Starting ZoneServer..."
         time.sleep(5)
         args4 = zonepath + '\ZoneServerUD_x64.exe'
-        subprocess.Popen(args4)
         with indent(4, quote='>>>'):
             puts(colored.red('Important: ') + 'Type /open to LoginServer to enable normal account login.')
+            subprocess.Popen(args4)
+            time.sleep(20)
     else:
         print "Run Server Setup first."
 
@@ -174,8 +175,7 @@ def start_web():
         checkpath = os.path.dirname(os.path.realpath(__file__)) + '\\Web\\'
         if os.path.isdir(checkpath):
             app = 'app.py'
-            args = 'python {0}{1}'.format(checkpath, app)
-            subprocess.Popen(args)
+            args = 'python2 {0}{1}'.format(checkpath, app)
             with indent(4, quote='>>>'):
                 puts(colored.green('Success: ') + 'Visit this link to register http://127.0.0.1:8666/gm')
         else:
@@ -188,8 +188,11 @@ def start_game():
     try:
         path = "C:\Program Files (x86)\CCR INC\RFOnline" 
         os.chdir(path)
-        if os.path.isdir('C:\Program Files (x86)\CCR INC\RFOnline'):
-            subprocess.Popen('C:\Program Files (x86)\CCR INC\RFOnline\RF Online.exe')
+        if os.path.isdir(path):
+            with indent(4, quote='>>>'):
+                subprocess.Popen(path + 'RF Online.exe')
+                puts(colored.green('Success: ') + 'Enjoy!')
+                time.sleep(20)
         else:
             p1 = subprocess.Popen('2232-PlayRF\RFOnline_Setup.exe')
             p1.wait()
@@ -198,7 +201,6 @@ def start_game():
                 p2.wait()
                 if p2.returncode == 0:
                     p3 = subprocess.Popen('dependencies\RF World & Login.msi')
-                    p3.wait()
     except:
         print "Install RF Client first!"
 
