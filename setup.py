@@ -121,7 +121,7 @@ def copy_dll():
         shutil.copy2('C:\\AppServ\\php5\\ntwdblib.dll', 'C:\\Windows\\SysWow64')
         shutil.copy2(exefile, 'C:\\Program Files (x86)\\CCR INC\\RFOnline\\')
     else:
-        print "File %s not found!" % file
+        print "File %s not found!" % dllfile
 
 
 def restart_mssql():
