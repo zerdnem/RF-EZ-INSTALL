@@ -27,7 +27,6 @@ class Whatever(threading.Thread):
         if os.path.isfile(self.filename):
             # print "Starting " + self.name
             extract_files(self.filename)
-            raw_input('Press any key to continue...')
         
 
 def extract_files(file):
@@ -43,7 +42,7 @@ def extract_files(file):
             args = "unrar x -y '{0}' '{1}\\'".format(file, cwd)
             lex = shlex.split(args)
             proc = subprocess.Popen(lex)
-            proc.wait()
+            raw_input('Press any key to continue...')
         elif file == emulatorrar:
             args = "unrar x -y '{0}' 'C:\\AppServ\\'".format(file)
             lex = shlex.split(args)
@@ -119,7 +118,10 @@ def copy_dll():
         shutil.copy2('C:\\AppServ\php5\\ntwdblib.dll', 'C:\\Windows')
         shutil.copy2('C:\\AppServ\\php5\\ntwdblib.dll', 'C:\\Windows\\system32')
         shutil.copy2('C:\\AppServ\\php5\\ntwdblib.dll', 'C:\\Windows\\SysWow64')
-        shutil.copy2(exefile, 'C:\\Program Files (x86)\\CCR INC\\RFOnline\\')
+        if os.path.isfile(exefile):
+            shutil.copy2(exefile, 'C:\\Program Files (x86)\\CCR INC\\RFOnline\\')
+        else:
+            print "File %s not found!" % exefile
     else:
         print "File %s not found!" % dllfile
 
