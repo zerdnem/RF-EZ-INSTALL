@@ -16,7 +16,6 @@ worldl = 'RF_World_log'
 FNULL = open(os.devnull, 'w')
 
 class Whatever(threading.Thread):
-
     def __init__(self, threadID, name, filename):
         threading.Thread.__init__(self)
         self.threadID = threadID
@@ -140,22 +139,22 @@ def start_server():
     os.chdir(loginpath)
     if os.path.isdir(checkpath):
         print "Starting AccountServer..."
-        time.sleep(5)
+        time.sleep(2)
         args1 = loginpath + '\AccountServerSD.exe'
         subprocess.check_call(args1)
         print "Starting BillingAgent..."
-        time.sleep(5)
+        time.sleep(2)
         args2 = loginpath + '\BillingAgentSD.exe'
         subprocess.check_call(args2)
         print "Starting LoginServer..."
-        time.sleep(5)
+        time.sleep(2)
         args3 = loginpath + '\LoginServerSD.exe'
         subprocess.check_call(args3)
         # [subprocess.Popen(args) for args in args1, args2, args3]
         path = zonepath
         os.chdir(path)
         print "Starting ZoneServer..."
-        time.sleep(5)
+        time.sleep(2)
         args4 = zonepath + '\ZoneServerUD_x64.exe'
         with indent(4, quote='>>>'):
             puts(colored.red('Important: ') + 'Type /open to LoginServer to enable normal account login.')
@@ -186,17 +185,17 @@ def start_game():
         os.chdir(path)
         if os.path.isdir(path):
             with indent(4, quote='>>>'):
-                subprocess.Popen(path + 'RF Online.exe')
+                subprocess.check_call(path + 'RF Online.exe')
                 puts(colored.green('Success: ') + 'Enjoy!')
                 time.sleep(20)
         else:
             p1 = subprocess.Popen('2232-PlayRF\RFOnline_Setup.exe')
             p1.wait()
             if p1.returncode == 0:
-                p2 = subprocess.Popen('dependencies\RF Account & Login.msi')
+                p2 = subprocess.Popen('msiexec /package dependencies\RF Account & Login.msi')
                 p2.wait()
                 if p2.returncode == 0:
-                    p3 = subprocess.Popen('dependencies\RF World & Login.msi')
+                    p3 = subprocess.Popen('msiexec /package dependencies\RF World & Login.msi')
     except:
         print "Install RF Client first!"
 
@@ -266,9 +265,10 @@ if __name__ == '__main__':
         install_python_modules()
         # restart_mssql()
         # restart_apache()
+        os.system('cls')
         with indent(4, quote='>>>'):
             puts(colored.green('Success: ') + 'Installation Complete!')
-            time.sleep(10)
+            time.sleep(5)
 
     elif input == 2:
         start_server()
