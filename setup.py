@@ -37,31 +37,27 @@ def extract_files(file):
         if file == dbrar:
             args = "unrar x -y 'db{0}.rar' '{1}\\db\\'".format(dbv, cwd)
             lex = shlex.split(args)
-            proc = subprocess.Popen(lex)
-            proc.wait()
+            subprocess.check_call(lex)
         elif file == serverrar:
             args = "unrar x -y '{0}' '{1}\\'".format(file, cwd)
             lex = shlex.split(args)
-            proc = subprocess.Popen(lex)
+            subprocess.check_call(lex)
         elif file == emulatorrar:
             args = "unrar x -y '{0}' 'C:\\AppServ\\'".format(file)
             lex = shlex.split(args)
-            proc = subprocess.Popen(lex)
-            proc.wait()
+            subprocess.check_call(lex)
     else:
         print "I can't extract these files...unrar.exe not found!"
         raise SystemExit
 
 
 def setup_mssql():
-    proc = subprocess.Popen('SQL\SQLEXPRWT_x64_ENU.exe /extract: SQL\\a', stdout=FNULL, stderr=FNULL)
-    proc.wait()
+    proc = subprocess.check_call('SQL\SQLEXPRWT_x64_ENU.exe /extract: SQL\\a')
 
 
 def create_instance():
     args = "SQL\\a\\Setup.exe /qs /ACTION=Install /FEATURES=SQL,Tools /INSTANCENAME=MSSQLSERVER /SQLSVCACCOUNT=\"NT AUTHORITY\Network Service\" /ADDCURRENTUSERASSQLADMIN /AGTSVCACCOUNT=\"NT AUTHORITY\Network Service\" /SECURITYMODE=SQL /SAPWD=wanker12 /IACCEPTSQLSERVERLICENSETERMS"
-    proc = subprocess.Popen(args, stdout=FNULL, stderr=FNULL)
-    proc.wait()
+    subprocess.check_call(args)
 
 
 def set_path_mssql():
@@ -75,40 +71,40 @@ def set_path_python():
 
 
 def install_python_modules():
-    subprocess.Popen('pip install flask', stdout=FNULL, stderr=FNULL)
-    subprocess.Popen('pip install flask-wtf', stdout=FNULL, stderr=FNULL)
-    subprocess.Popen('pip install pyodbc', stdout=FNULL, stderr=FNULL)
-    subprocess.Popen('pip install passlib', stdout=FNULL, stderr=FNULL)
+    subprocess.check_call('pip install flask')
+    subprocess.check_call('pip install flask-wtf')
+    subprocess.check_call('pip install pyodbc')
+    subprocess.check_call('pip install passlib')
 
 
 def create_db(db):
     args = "sqlcmd -S (local) -Q \"create database {0}\"".format(db)
-    proc = subprocess.Popen(args, stdout=FNULL, stderr=FNULL)
+    proc = subprocess.check_call(args)
     return proc
 
 
 def restore_billing():
     cwd = os.getcwd()
     args = "sqlcmd -S (local) -Q \"RESTORE DATABASE {0} FROM DISK = N'{3}\\db\\{0}.bak'WITH FILE = 1, MOVE N'{1}' TO N'{3}\\db\\{0}.mdf', MOVE N'{2}' TO N'{3}\\db\\{0}.LDF', NOUNLOAD, REPLACE,  STATS = 10\"".format(bill, billf, billl, cwd)
-    proc = subprocess.Popen(args, stdout=FNULL, stderr=FNULL)
+    subprocess.check_call(args)
 
 
 def restore_rfuser():
     cwd = os.getcwd()
     args = "sqlcmd -S (local) -Q \"RESTORE DATABASE {0} FROM DISK = N'{3}\\db\\{0}.bak'WITH FILE = 1, MOVE N'{1}' TO N'{3}\\db\\{0}.mdf', MOVE N'{2}' TO N'{3}\\db\\{0}.LDF', NOUNLOAD, REPLACE,  STATS = 10\"".format(user, userf, userl, cwd)
-    proc = subprocess.Popen(args, stdout=FNULL, stderr=FNULL)
+    subprocess.check_call(args)
 
 
 def restore_rfworld():
     cwd = os.getcwd()
     args = "sqlcmd -S (local) -Q \"RESTORE DATABASE {0} FROM DISK = N'{3}\\db\\{0}.bak'WITH FILE = 1, MOVE N'{1}' TO N'{3}\\db\\{0}.mdf', MOVE N'{2}' TO N'{3}\\db\\{0}.LDF', NOUNLOAD, REPLACE,  STATS = 10\"".format(world, worldf, worldl, cwd)
-    proc = subprocess.Popen(args, stdout=FNULL, stderr=FNULL)
+    proc = subprocess.Popen(args)
 
 
 def odbcconf():
-    subprocess.Popen('ODBCCONF.exe /a { CONFIGDSN "SQL Server" "DSN=bill|SERVER=(local)|Trusted_Connection=Yes|Database=bill"}', stdout=FNULL, stderr=FNULL)
-    subprocess.Popen('ODBCCONF.exe /a { CONFIGDSN "SQL Server" "DSN=user|SERVER=(local)|Trusted_Connection=Yes|Database=user"}', stdout=FNULL, stderr=FNULL)
-    subprocess.Popen('ODBCCONF.exe /a { CONFIGDSN "SQL Server" "DSN=user|SERVER=(local)|Trusted_Connection=Yes|Database=user"}', stdout=FNULL, stderr=FNULL)
+    subprocess.check_call('ODBCCONF.exe /a { CONFIGDSN "SQL Server" "DSN=bill|SERVER=(local)|Trusted_Connection=Yes|Database=bill"}')
+    subprocess.check_call('ODBCCONF.exe /a { CONFIGDSN "SQL Server" "DSN=user|SERVER=(local)|Trusted_Connection=Yes|Database=user"}')
+    subprocess.check_call('ODBCCONF.exe /a { CONFIGDSN "SQL Server" "DSN=user|SERVER=(local)|Trusted_Connection=Yes|Database=user"}')
 
 
 def copy_dll():
@@ -129,15 +125,13 @@ def copy_dll():
 def restart_mssql():
     args = "net.exe stop \"MSSQLSERVER\" && net.exe start \"MSSQLSERVER\""
     lex = shlex.split(args)
-    proc = subprocess.Popen(lex, stdout=FNULL, stderr=FNULL)
-    proc.wait()
+    subprocess.check_call(lex)
 
 
 def restart_apache():
     args = "net.exe stop \"apache2.2\" && net.exe start \"apache2.2\""
     lex = shlex.split(args)
-    proc = subprocess.Popen(lex, stdout=FNULL, stderr=FNULL)
-    proc.wait()
+    subprocess.check_call(lex)
 
 
 def start_server():
@@ -227,17 +221,6 @@ if __name__ == '__main__':
     welcome()
     input = int(raw_input("Input:  ") or "1")
     if input == 1:
-        dbrar = 'db2232.rar'
-        emulatorrar = 'Emulator.rar'
-        serverrar = '2232.rar'
-        thread1 = Whatever(1, "Worker#1", dbrar)
-        thread2 = Whatever(2, "Worker#2", serverrar)
-        thread3 = Whatever(3, "Worker#3", emulatorrar)
-        thread1.start()
-        thread2.start()
-        thread3.start()
-        copy_dll()
-        raw_input('Press any key to continue...')
 
         #Configure MSSQL
         print "Configuring MSSQL..."
@@ -254,7 +237,18 @@ if __name__ == '__main__':
         restore_rfuser()
         restore_rfworld()
         odbcconf()
-        raw_input('Press any key to continue...')
+
+        #Extract Files
+        dbrar = 'db2232.rar'
+        emulatorrar = 'Emulator.rar'
+        serverrar = '2232.rar'
+        thread1 = Whatever(1, "Worker#1", dbrar)
+        thread2 = Whatever(2, "Worker#2", serverrar)
+        thread3 = Whatever(3, "Worker#3", emulatorrar)
+        thread1.start()
+        thread2.start()
+        thread3.start()
+        copy_dll()
 
         #Configure Web CPANEL
         print "Configuring Web CPANEL..."
