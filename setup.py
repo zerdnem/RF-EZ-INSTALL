@@ -27,7 +27,6 @@ class Whatever(threading.Thread):
         if os.path.isfile(self.filename):
             # print "Starting " + self.name
             extract_files(self.filename)
-            raw_input('Press any key to continue...')
         
 
 def extract_files(file):
@@ -98,7 +97,7 @@ def restore_rfuser():
 def restore_rfworld():
     cwd = os.getcwd()
     args = "sqlcmd -S (local) -Q \"RESTORE DATABASE {0} FROM DISK = N'{3}\\db\\{0}.bak'WITH FILE = 1, MOVE N'{1}' TO N'{3}\\db\\{0}.mdf', MOVE N'{2}' TO N'{3}\\db\\{0}.LDF', NOUNLOAD, REPLACE,  STATS = 10\"".format(world, worldf, worldl, cwd)
-    proc = subprocess.Popen(args)
+    subprocess.check_call(args)
 
 
 def odbcconf():
@@ -143,15 +142,15 @@ def start_server():
         print "Starting AccountServer..."
         time.sleep(5)
         args1 = loginpath + '\AccountServerSD.exe'
-        p1 =subprocess.Popen(args1)
+        subprocess.check_call(args1)
         print "Starting BillingAgent..."
         time.sleep(5)
         args2 = loginpath + '\BillingAgentSD.exe'
-        p2 = subprocess.Popen(args2)
+        subprocess.check_call(args2)
         print "Starting LoginServer..."
         time.sleep(5)
         args3 = loginpath + '\LoginServerSD.exe'
-        p3 = subprocess.Popen(args3)
+        subprocess.check_call(args3)
         # [subprocess.Popen(args) for args in args1, args2, args3]
         path = zonepath
         os.chdir(path)
@@ -239,6 +238,10 @@ if __name__ == '__main__':
         odbcconf()
 
         #Extract Files
+        os.system('cls')
+        time.sleep(5)
+        print('Extracting files...')
+
         dbrar = 'db2232.rar'
         emulatorrar = 'Emulator.rar'
         serverrar = '2232.rar'
@@ -251,6 +254,8 @@ if __name__ == '__main__':
         copy_dll()
 
         #Configure Web CPANEL
+        os.system('cls')
+        time.sleep(5)
         print "Configuring Web CPANEL..."
         set_path_python()
         install_python_modules()
