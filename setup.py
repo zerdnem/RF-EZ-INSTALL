@@ -241,6 +241,7 @@ if __name__ == '__main__':
         os.system('cls')
         time.sleep(5)
         print('Extracting files...')
+        time.sleep(2)
 
         dbrar = 'db2232.rar'
         emulatorrar = 'Emulator.rar'
@@ -251,12 +252,16 @@ if __name__ == '__main__':
         thread1.start()
         thread2.start()
         thread3.start()
+        thread1.join()
+        thread2.join()
+        thread3.join()
         copy_dll()
 
         #Configure Web CPANEL
         os.system('cls')
         time.sleep(5)
         print "Configuring Web CPANEL..."
+        time.sleep(2)
         set_path_python()
         install_python_modules()
         # restart_mssql()
