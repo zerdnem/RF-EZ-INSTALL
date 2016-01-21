@@ -54,7 +54,7 @@ def setup_mssql():
 
 
 def create_instance():
-    args = "SQL\\a\\Setup.exe /qs /ACTION=Install /FEATURES=SQL,Tools /INSTANCENAME=MSSQLSERVER /SQLSVCACCOUNT=\"NT AUTHORITY\Network Service\" /ADDCURRENTUSERASSQLADMIN /AGTSVCACCOUNT=\"NT AUTHORITY\Network Service\" /SECURITYMODE=SQL /SAPWD=wanker12 /IACCEPTSQLSERVERLICENSETERMS"
+    args = r"SQL\\a\\Setup.exe /qs /ACTION=Install /FEATURES=SQL,Tools /INSTANCENAME=MSSQLSERVER /SQLSVCACCOUNT=\"NT AUTHORITY\Network Service\" /ADDCURRENTUSERASSQLADMIN /AGTSVCACCOUNT=\"NT AUTHORITY\Network Service\" /SECURITYMODE=SQL /SAPWD=wanker12 /IACCEPTSQLSERVERLICENSETERMS"
     subprocess.check_call(args)
 
 
@@ -73,7 +73,7 @@ def install_python_modules():
     args2 = 'pip install flask-wtf'
     args3 = 'pip install pyodbc'
     args4 = 'pip install passlib'
-    [subprocess.check_call(args) for args in args1, args2, args3, args4]
+    [subprocess.check_call(args) for args in (args1, args2, args3, args4)]
 
 
 def create_db(db):
@@ -104,7 +104,7 @@ def odbcconf():
     args1 = "ODBCCONF.exe /a {{ CONFIGDSN \"SQL Server\" \"DSN={0}|SERVER=(local)|Trusted_Connection=Yes|Database={0}\"}}".format(user) 
     args2 = "ODBCCONF.exe /a {{ CONFIGDSN \"SQL Server\" \"DSN={0}|SERVER=(local)|Trusted_Connection=Yes|Database={0}\"}}".format(bill)
     args3 = "ODBCCONF.exe /a {{ CONFIGDSN \"SQL Server\" \"DSN={0}|SERVER=(local)|Trusted_Connection=Yes|Database={0}\"}}".format(world)
-    [subprocess.check_call(args) for args in args1, args2, args3]
+    [subprocess.check_call(args) for args in (rgs1, args2, args3)]
 
 
 def copy_dll():
@@ -215,7 +215,7 @@ def welcome():
 
 if __name__ == '__main__':
     welcome()
-    input = int(raw_input("Input:  ") or "1")
+    input = int(input("Input:  ") or "1")
     if input == 1:
 
         #Configure MSSQL
