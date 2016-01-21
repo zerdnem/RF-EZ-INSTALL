@@ -84,14 +84,14 @@ def gm_register():
             row = cur.fetchone()
             if row:
                 flash(u'That username is already taken, try another one.', 'error')
-                print "Username is already taken!"
+                print("Username is already taken!")
                 return render_template('gm.html', form=form)
 
             else:
                 cur.execute("insert into dbo.tbl_StaffAccount (ID,PW,Grade,Depart,RealName,SubGrade,Birthday,ComClass) values(convert(binary, ?),convert(binary, ?),'2', 'none', ?, '4', '01/01/1991', 'GM')", username, password, username.strip('!'))
                 conn.commit()
                 flash(u'Registration successful!', 'success')
-                print "Registration Successful!"
+                print("Registration Successful!")
                 cur.close()
                 gc.collect()
         return render_template('gm.html', form=form)
@@ -125,14 +125,14 @@ def register_page():
             row = cur.fetchone()
             if row:
                 flash(u'That username is already taken, try another one.', 'error')
-                print "Username is already taken!"
+                print("Username is already taken!")
                 return render_template('register.html', form=form)
 
             else:
                 cur.execute("insert into dbo.tbl_RFTestAccount(id, password, email) values(convert(binary(13), ?),convert(binary(13), ?), ?)", username, password, email)
                 conn.commit()
                 flash(u'Registration successful!', 'success')
-                print "Registration Successful!"
+                print("Registration Successful!")
                 cur.close()
                 gc.collect()
 
