@@ -143,16 +143,15 @@ def start_server():
         print "Starting AccountServer..."
         time.sleep(2)
         args1 = loginpath + '\AccountServerSD.exe'
-        subprocess.check_call(args1)
+        subprocess.Popen(args1)
         print "Starting BillingAgent..."
         time.sleep(2)
         args2 = loginpath + '\BillingAgentSD.exe'
-        subprocess.check_call(args2)
+        subprocess.Popen(args2)
         print "Starting LoginServer..."
         time.sleep(2)
         args3 = loginpath + '\LoginServerSD.exe'
-        subprocess.check_call(args3)
-        # [subprocess.Popen(args) for args in args1, args2, args3]
+        subprocess.Popen(args3)
         path = zonepath
         os.chdir(path)
         print "Starting ZoneServer..."
