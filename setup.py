@@ -69,10 +69,11 @@ def set_path_python():
 
 
 def install_python_modules():
-    subprocess.check_call('pip install flask')
-    subprocess.check_call('pip install flask-wtf')
-    subprocess.check_call('pip install pyodbc')
-    subprocess.check_call('pip install passlib')
+    args1 = 'pip install flask'
+    args2 = 'pip install flask-wtf'
+    args3 = 'pip install pyodbc'
+    args4 = 'pip install passlib'
+    [subprocess.check_call(args) for args in args1, args2, args3, args4]
 
 
 def create_db(db):
@@ -100,9 +101,10 @@ def restore_rfworld():
 
 
 def odbcconf():
-    subprocess.check_call('ODBCCONF.exe /a { CONFIGDSN "SQL Server" "DSN=bill|SERVER=(local)|Trusted_Connection=Yes|Database=bill"}')
-    subprocess.check_call('ODBCCONF.exe /a { CONFIGDSN "SQL Server" "DSN=user|SERVER=(local)|Trusted_Connection=Yes|Database=user"}')
-    subprocess.check_call('ODBCCONF.exe /a { CONFIGDSN "SQL Server" "DSN=user|SERVER=(local)|Trusted_Connection=Yes|Database=user"}')
+    args1 = "ODBCCONF.exe /a {{ CONFIGDSN \"SQL Server\" \"DSN={0}|SERVER=(local)|Trusted_Connection=Yes|Database={0}\"}}".format(user) 
+    args2 = "ODBCCONF.exe /a {{ CONFIGDSN \"SQL Server\" \"DSN={0}|SERVER=(local)|Trusted_Connection=Yes|Database={0}\"}}".format(bill)
+    args3 = "ODBCCONF.exe /a {{ CONFIGDSN \"SQL Server\" \"DSN={0}|SERVER=(local)|Trusted_Connection=Yes|Database={0}\"}}".format(world)
+    [subprocess.check_call(args) for args in args1, args2, args3]
 
 
 def copy_dll():
@@ -165,17 +167,14 @@ def start_server():
 
 
 def start_web():
-    try:
-        checkpath = os.path.dirname(os.path.realpath(__file__)) + '\\Web\\'
-        if os.path.isdir(checkpath):
-            app = 'app.py'
-            args = 'python2 {0}{1}'.format(checkpath, app)
-            subprocess.Popen(args)
-            with indent(4, quote='>>>'):
-                puts(colored.green('Success: ') + 'Visit this link to register http://127.0.0.1:8666/gm')
-        else:
-            print "Run Server Setup first."
-    except:
+    checkpath = os.path.dirname(os.path.realpath(__file__)) + '\\Web\\'
+    if os.path.isdir(checkpath):
+        app = 'app.py'
+        args = 'python {0}{1}'.format(checkpath, app)
+        subprocess.Popen(args)
+        with indent(4, quote='>>>'):
+            puts(colored.green('Success: ') + 'Visit this link to register http://127.0.0.1:8666/gm')
+    else:
         print "Run Server Setup first."
 
 
