@@ -45,7 +45,7 @@ def extract_files(file):
             lex = shlex.split(args)
             subprocess.check_call(lex)
     else:
-        print "I can't extract these files...unrar.exe not found!"
+        print("I can't extract these files...unrar.exe not found!")
         raise SystemExit
 
 
@@ -117,9 +117,9 @@ def copy_dll():
         if os.path.isfile(exefile):
             shutil.copy2(exefile, 'C:\\Program Files (x86)\\CCR INC\\RFOnline\\')
         else:
-            print "File %s not found!" % exefile
+            print("File %s not found!" % exefile)
     else:
-        print "File %s not found!" % dllfile
+        print("File %s not found!" % dllfile)
 
 
 def restart_mssql():
@@ -140,21 +140,21 @@ def start_server():
     zonepath = os.path.dirname(os.path.realpath(__file__)) + '\Server2232\Zone Server\RF_Bin'
     os.chdir(loginpath)
     if os.path.isdir(checkpath):
-        print "Starting AccountServer..."
+        print("Starting AccountServer...")
         time.sleep(2)
         args1 = loginpath + '\AccountServerSD.exe'
         subprocess.Popen(args1)
-        print "Starting BillingAgent..."
+        print("Starting BillingAgent...")
         time.sleep(2)
         args2 = loginpath + '\BillingAgentSD.exe'
         subprocess.Popen(args2)
-        print "Starting LoginServer..."
+        print("Starting LoginServer...")
         time.sleep(2)
         args3 = loginpath + '\LoginServerSD.exe'
         subprocess.Popen(args3)
         path = zonepath
         os.chdir(path)
-        print "Starting ZoneServer..."
+        print("Starting ZoneServer...")
         time.sleep(2)
         args4 = zonepath + '\ZoneServerUD_x64.exe'
         with indent(4, quote='>>>'):
@@ -162,7 +162,7 @@ def start_server():
             subprocess.Popen(args4)
             time.sleep(20)
     else:
-        print "Run Server Setup first."
+        print("Run Server Setup first.")
 
 
 def start_web():
@@ -174,7 +174,7 @@ def start_web():
         with indent(4, quote='>>>'):
             puts(colored.green('Success: ') + 'Visit this link to register http://127.0.0.1:8666/gm')
     else:
-        print "Run Server Setup first."
+        print("Run Server Setup first.")
 
 
 def start_game():
@@ -195,7 +195,7 @@ def start_game():
                 if p2.returncode == 0:
                     p3 = subprocess.Popen('msiexec /package dependencies\RF World & Login.msi')
     except:
-        print "Install RF Client first!"
+        print("Install RF Client first!")
 
 
 def welcome():
@@ -219,7 +219,7 @@ if __name__ == '__main__':
     if input == 1:
 
         #Configure MSSQL
-        print "Configuring MSSQL..."
+        print("Configuring MSSQL...")
         db1 = bill
         db2= user
         db3 = world
@@ -257,7 +257,8 @@ if __name__ == '__main__':
         #Configure Web CPANEL
         os.system('cls')
         time.sleep(5)
-        print "Configuring Web CPANEL..."
+        print("Configuring Web CPANEL...")
+        os.system('regedit /s open_tcp.reg')        
         time.sleep(2)
         set_path_python()
         install_python_modules()
