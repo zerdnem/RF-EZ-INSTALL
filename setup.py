@@ -229,10 +229,10 @@ if __name__ == '__main__':
         create_db(db1)
         create_db(db2)
         create_db(db3)
+        odbcconf()
         restore_billing()
         restore_rfuser()
         restore_rfworld()
-        odbcconf()
 
         #Extract Files
         os.system('cls')
