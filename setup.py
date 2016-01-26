@@ -50,7 +50,7 @@ def extract_files(file):
 
 
 def setup_mssql():
-    proc = subprocess.check_call('SQL\SQLEXPRWT_x64_ENU.exe /extract: SQL\\a')
+    subprocess.check_call('SQL\SQLEXPRWT_x64_ENU.exe /extract: SQL\\a')
 
 
 def create_instance():
