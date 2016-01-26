@@ -1,4 +1,4 @@
-import subprocess, os, shlex, shutil, ctypes, time, threading
+import subprocess, os, shlex, shutil, time, threading
 from clint.textui import colored, indent, puts
 
 #TODO
