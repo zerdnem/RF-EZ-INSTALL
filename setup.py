@@ -220,15 +220,12 @@ if __name__ == '__main__':
 
         #Configure MSSQL
         print("Configuring MSSQL...")
-        db1 = bill
-        db2= user
-        db3 = world
         setup_mssql()
         create_instance()
         set_path_mssql()
-        create_db(db1)
-        create_db(db2)
-        create_db(db3)
+        create_db(bill)
+        create_db(user)
+        create_db(world)
         odbcconf()
         restore_billing()
         restore_rfuser()
